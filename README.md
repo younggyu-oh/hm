@@ -1,6 +1,6 @@
 # HM Growth Analytics
 
-## Overview
+## Project Overview
 
 The goal is to construct an end-to-end analytics stack that loads user events and enables tracking of growth metrics such as Daily/Weekly/Monthly Active Users and Retention.
 
@@ -8,33 +8,32 @@ The goal is to construct an end-to-end analytics stack that loads user events an
 
 ## Technologies Used
 
-* **DuckDB**: Lightweight analytical database used for local querying.
-* **Streamlit**: Interactive web UI for dashboarding.
-* **Python (pandas, duckdb)**: For ETL and transformation logic.
+* **Database**: `DuckDB` – Used for fast, in-process analytical querying and storing transformed event/user data.
+* **Transformation & Modeling**: `dbt` – Used for SQL-based data modeling and creation of core tables (`dim_users`, `fct_events`, etc.).
+* **Visualization**: `Streamlit` – Used to build the interactive dashboard with filters and metric visualizations.
+* **ETL/Execution Engine**: `Python` – Used for orchestrating data load and transformation using `pandas` and executing SQL via `duckdb`.
 
-> ⚠️ These tools were selected solely for the purpose of the assignment. In a production environment, different tech stacks would be more appropriate. Please refer to the "DW Design Proposal" section below for more realistic stack considerations.
+> These tools were selected solely for the purpose of this exercise. In a production environment, different tooling would be more appropriate. Please refer to the "📐 DW Design Proposal for HM" section below for more realistic stack considerations.
 
 ---
 
-## 🚀 How to Run
+## How to Run
 
-### 🔗 Live Dashboard
+### Live Dashboard
 
-> Streamlit public URL: *\[https://hm-younggyu-oh.streamlit.app/]*
+> public URL: *\[https://hm-younggyu-oh.streamlit.app/]*
 
-### 🖥️ Local Setup
+### Local Setup
+# 0. (Optional) Ensure Python 3.10+ is installed
+$ python3 --version
+# If needed, install via pyenv or system package manager
 
 ```bash
-# Clone the repo
+# 1. Clone the repo
 $ git clone https://github.com/younggyu-oh/hm.git
 $ cd hm
 
-# (Optional) create virtual env
-$ python -m venv .venv
-$ source .venv/bin/activate
-$ pip install -r requirements.txt
-
-# Run Streamlit
-$ streamlit run Step2-visualize_data.py
+# 2. Run the full setup script
+$ chmod +x setup.sh
+$ ./setup.sh
 ```
-
