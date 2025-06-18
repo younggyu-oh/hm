@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.ipynb_checkpoints
+
+# Virtual Environment
+.venv/
+env/
+venv/
+
+# MacOS metadata
+.DS_Store
+
+# Streamlit
+#.streamlit/config.toml
+
+# DB files (only ignore temp, not your actual db file!)
+# hm.duckdb 포함하고 싶으면 아래 주석처리
+# db/*.duckdb-wal
+db/*.tmp
+
+# dbt artifacts
+hm_analytics/target/
+hm_analytics/dbt_packages/
+hm_analytics/logs/
+logs/
+target/
+
+# IDE
+.idea/
+.vscode/
+
+# CSV test data (optional)
+#data/*.csv
+
+# VSCode / JetBrains project settings (optional)
+*.iml
+*.code-workspace
+
+# Other
+*.log
