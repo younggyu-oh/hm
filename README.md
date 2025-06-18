@@ -51,19 +51,19 @@ $ ./setup.sh
 
 ---
 
-## 🧱 Data Warehouse Tables & Lineage
+## Data Warehouse Tables & Lineage
 
-### 🗃️ Source Table
+### Source Table
 
 * `raw_events_d`: Raw user event logs
 
-### 🧩 Data Warehouse Layer (Fact & Dimension)
+### Data Warehouse Layer (Fact & Dimension)
 
 * `fct_events_d`: Cleaned and enriched user event logs for analytics
 * `dim_users`: User profile and signup metadata
 * `dim_date`: Date dimension for time-based joins and calendar aggregations
 
-### 📊 Data Mart Layer (Summary)
+### Data Mart Layer (Summary)
 
 * `s_active_users_d/w/m`: Active user counts by day/week/month
 * `s_user_total_activity_d`: Each user's first/last event and cumulative stats
