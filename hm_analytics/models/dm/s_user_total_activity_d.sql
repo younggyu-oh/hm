@@ -2,14 +2,17 @@
     materialized='table'
 ) }}
 
+-- In a production environment, this table would be updated incrementally on a daily basis.
+-- For this small-scale assignment, partitioning was omitted for simplicity.
+
 select user_id, min(event_date_utc) first_event_date,
        max(event_date_utc) last_event_date,
        count(1) total_event_count,
        sum(miles_amount) total_miles_amount,
        STRFTIME(current_timestamp, '%Y-%m-%d %H:%M:%S.%f')  AS etl_at_utc,
        STRFTIME(current_date, '%Y-%m-%d') as dt -- batch_date
-from {{ ref('fct_events_d') }}
-group by user_id
+  from {{ ref('fct_events_d') }}
+ group by user_id
 
 --
 --

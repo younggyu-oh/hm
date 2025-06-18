@@ -17,6 +17,26 @@ The goal is to construct an end-to-end analytics stack that loads user events an
 
 ---
 
+## 🗂️ Project Directory Structure
+
+```text
+├── data/                
+│   └── event_stream.csv        # Raw input data (event logs)
+├── db/                  
+│   └── hm.duckdb               # DuckDB file (used as warehouse)
+├── hm_analytics/        
+│   └── models/                
+│       ├── dm/                 # Data Marts (summary models for dashboard use)
+│       └── dw/                 # Core DW tables (dim, fact layer)
+├── load_data_to_duckdb.py      # Initial loader script for raw CSV -> DuckDB
+├── visualize_data.py           # Streamlit app for dashboard rendering
+├── setup.sh                    # One-click setup script (env, install, dbt, data load)
+├── requirements.txt            # Python dependency list
+└── README.md                   # Project documentation
+```
+
+---
+
 ## How to Run
 
 ### Live Dashboard

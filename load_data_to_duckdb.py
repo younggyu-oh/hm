@@ -4,16 +4,18 @@ import random
 from datetime import datetime
 from faker import Faker
 
-# === Load raw event data ===
+# -----------------------------
+# 1. Load raw event data
+# -----------------------------
 df = pd.read_csv('data/event_stream.csv')
 df["etl_at_utc"] = datetime.utcnow()
 df["event_time"] = pd.to_datetime(df["event_time"])
 df["dt"] = df["event_time"].dt.strftime("%Y%m%d")
 
-# === Connect to DuckDB ===
+#  Connect to DuckDB 
 con = duckdb.connect("db/hm.duckdb")
 
-# === Create or append to raw_events_d ===
+
 con.execute("DROP TABLE IF EXISTS raw_events_d")
 con.execute("""
     CREATE TABLE IF NOT EXISTS raw_events_d AS SELECT * FROM df WHERE 0=1
@@ -23,7 +25,9 @@ con.execute("INSERT INTO raw_events_d SELECT * FROM sample_data")
 
 print("Step1. Loaded raw_events_d")
 
-# === Generate dim_users ===
+# -----------------------------
+# 2. Generate dim_users
+# -----------------------------
 user_ids_df = con.execute("SELECT DISTINCT user_id FROM raw_events_d WHERE user_id IS NOT NULL").fetchdf()
 fake = Faker()
 sexs = ["F", "M"]
@@ -37,8 +41,8 @@ def generate_user_record(user_id):
         "utm_source": random.choice(age_groups),
         "country": random.choice(countries),
         "first_event_time": fake.date_time_between_dates(
-            datetime_start=pd.Timestamp("2025-01-01"),
-            datetime_end=pd.Timestamp("2025-01-31")
+            datetime_start=pd.Timestamp("2025-03-01"),
+            datetime_end=pd.Timestamp("2025-03-31")
         ),
         "last_event_time": fake.date_time_between_dates(
             datetime_start=pd.Timestamp("2025-06-01"),
@@ -53,7 +57,9 @@ con.execute("CREATE OR REPLACE TABLE dim_users AS SELECT * FROM user_dim_df")
 
 print("Step2. Created dim_users")
 
-# === Generate dim_date ===
+# -----------------------------
+# 3. Generate dim_date
+# -----------------------------
 start_date = "2025-01-01"
 end_date = "2025-12-31"
 date_range = pd.date_range(start=start_date, end=end_date, freq='D')
