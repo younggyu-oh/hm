@@ -8,10 +8,10 @@ The goal is to construct an end-to-end analytics stack that loads user events an
 
 ## Technologies Used
 
-* **Database**: `DuckDB` – Used for fast, in-process analytical querying and storing transformed event/user data.
-* **Transformation & Modeling**: `dbt` – Used for SQL-based data modeling and creation of core tables (`dim_users`, `fct_events`, etc.).
-* **Visualization**: `Streamlit` – Used to build the interactive dashboard with filters and metric visualizations.
-* **ETL/Execution Engine**: `Python` – Used for orchestrating data load and transformation using `pandas` and executing SQL via `duckdb`.
+* **Database**: `DuckDB` 
+* **Transformation & Modeling**: `dbt` 
+* **Visualization**: `Streamlit` 
+* **ETL/Execution Engine**: `Python` 
 
 > These tools were selected solely for the purpose of this exercise. In a production environment, different tooling would be more appropriate. Please refer to the "DW System Design" section below for more realistic stack considerations.
 
@@ -117,16 +117,16 @@ s_user_total_activity_d, s_user_activity_w/m
 
 ---
 
-### 🧭 Stack Recommendations by Layer
+### Stack Recommendations by Layer
 
 | Layer                      | Options                                  | Recommendation & Notes                                                                               |
 | -------------------------- | ---------------------------------------- | ---------------------------------------------------------------------------------------------------- |
 | **Storage (Data Lake)**    | GCS (with Parquet), BigQuery             | Use GCS + Parquet for flexibility across compute layers (BigQuery, Spark, etc.)                      |
 | **Compute / Query Engine** | BigQuery, Spark(Databricks), Trino       | BigQuery will likely remain the main query engine. Spark enables scalable parallel processing. if query volume grows and BigQuery costs rise, consider moving heavy workloads to dedicated compute with Trino.  |
-| **Transformation**         | dbt                                      | Keep using dbt, but with better testing, CI, and ownership practices                                 |
+| **Transformation**         | dbt                                      | Keep using dbt                                                                                       |
 | **Batch Orchestration**    | Airflow                                  | Airflow is mature and Google-friendly                                                                |
-| **Real-time Processing**   | Kafka + Flink / Spark Streaming          | If needed for real-time feeds; otherwise batch should suffice early on                               |
-| **Real-time Storage**      | Bigtable, Redis, Firestore               | Only if real-time serving (e.g., feature store or dashboard APIs) becomes essential                  |
+| **Real-time Processing**   | Kafka + Flink / Spark Streaming          | If needed for real-time feeds. otherwise batch should suffice early on                               |
+| **Real-time Storage**      | Bigtable, Redis, Firestore               | Only if real-time serving (e.g., feature store or dashboard APIs) becomes essential. (expensive)     |
 | **BI / Visualization**     | Superset, Looker                         | Superset is good for simple analysis. Looker for scalable governance later                           |
 | **Data Quality & Testing** | dbt tests, Great Expectations            | Add dbt tests and layer on Great Expectations for critical flows                                     |
 
