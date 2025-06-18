@@ -13,7 +13,7 @@ The goal is to construct an end-to-end analytics stack that loads user events an
 * **Visualization**: `Streamlit` – Used to build the interactive dashboard with filters and metric visualizations.
 * **ETL/Execution Engine**: `Python` – Used for orchestrating data load and transformation using `pandas` and executing SQL via `duckdb`.
 
-> These tools were selected solely for the purpose of this exercise. In a production environment, different tooling would be more appropriate. Please refer to the "DW Design Proposal" section below for more realistic stack considerations.
+> These tools were selected solely for the purpose of this exercise. In a production environment, different tooling would be more appropriate. Please refer to the "DW System Design" section below for more realistic stack considerations.
 
 ---
 
@@ -91,4 +91,48 @@ s_user_total_activity_d, s_user_activity_w/m
 
 * A clear separation between DW and DM layers helps ensure scalability and clarity.
 * Pre-aggregating user-level and period-level activity allows for efficient retention metric computation, avoiding full-table scans and reducing memory usage.
+
+---
+
+## DW System Design
+
+### Traffic Estimation
+
+| Metric                         | Estimate                            |
+| ------------------------------ | ----------------------------------- |
+| Registered Users               | 200,000                             |
+| Monthly Active Users (MAU)     | 50,000                              |
+| Daily Active Users (DAU)       | 10,000                              |
+| Estimated Daily Event Volume   | 20MB (10000 X 10events X 200bytes)  |
+| Estimated Monthly Event Volume | 600MB                               |
+
+---
+
+### Current Stack 
+
+* **Storage**: Google BigQuery 
+* **Modeling**: dbt 
+* **Visualization**: Superset
+* **Event Tracking**: Mixpanel 
+
+---
+
+### 🧭 Stack Recommendations by Layer
+
+| Layer                      | Options                                  | Recommendation & Notes                                                                               |
+| -------------------------- | ---------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| **Storage (Data Lake)**    | GCS (with Parquet), BigQuery             | Use GCS + Parquet for flexibility across compute layers (BigQuery, Spark, etc.)                      |
+| **Compute / Query Engine** | BigQuery, Spark(Databricks), Trino       | BigQuery will likely remain the main query engine. Spark enables scalable parallel processing. if query volume grows and BigQuery costs rise, consider moving heavy workloads to dedicated compute with Trino.  |
+| **Transformation**         | dbt                                      | Keep using dbt, but with better testing, CI, and ownership practices                                 |
+| **Batch Orchestration**    | Airflow                                  | Airflow is mature and Google-friendly                                                                |
+| **Real-time Processing**   | Kafka + Flink / Spark Streaming          | If needed for real-time feeds; otherwise batch should suffice early on                               |
+| **Real-time Storage**      | Bigtable, Redis, Firestore               | Only if real-time serving (e.g., feature store or dashboard APIs) becomes essential                  |
+| **BI / Visualization**     | Superset, Looker                         | Superset is good for simple analysis. Looker for scalable governance later                           |
+| **Data Quality & Testing** | dbt tests, Great Expectations            | Add dbt tests and layer on Great Expectations for critical flows                                     |
+
+
+ 
+
+
+
 
