@@ -41,7 +41,7 @@ The goal is to construct an end-to-end analytics stack that loads user events an
 
 ### Live Dashboard
 
-> public URL: *\[https://hm-younggyu-oh.streamlit.app/]*
+> public URL: *\[https://younggyu-oh.streamlit.app/]*
 
 ### Local Setup
 ```bash
