@@ -102,8 +102,8 @@ raw_events_d
         └──► s_user_activity_w/m
 
 s_user_total_activity_d, s_user_activity_w/m
-  └──► s_user_retention_w/m
-       └──► s_user_retention_triangle_w/m
+  ├──► s_user_retention_w/m
+  └──► s_user_retention_triangle_w/m
 
 (dim_users, dim_date used across joins)
 ```
