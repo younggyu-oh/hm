@@ -17,7 +17,7 @@ The goal is to construct an end-to-end analytics stack that loads user events an
 
 ---
 
-## 🗂️ Project Directory Structure
+## Project Directory Structure
 
 ```text
 ├── data/                
