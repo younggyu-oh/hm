@@ -62,10 +62,11 @@ $ ./setup.sh
 
 ## Dashboard Features
 
-* **Filters**: `Country`, `Transaction Category`
+
 * **Metrics Visualized**:
 
   * Daily / Weekly / Monthly Active Users (DAU, WAU, MAU)
+    * Filters: `Country`, `Transaction Category` 
   * Growth Accounting: New, Retained, Resurrected, Churned Users
   * Retention Triangle: Weekly + Monthly
 
